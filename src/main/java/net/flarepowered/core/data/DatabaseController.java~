@@ -1,0 +1,4 @@
+package net.flares.lib.database;
+
+public class DatabaseController {
+}
