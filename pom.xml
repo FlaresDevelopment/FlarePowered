@@ -4,30 +4,48 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>net.flarepowered</groupId>
-    <artifactId>FlarePowered</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>net.flaredev</groupId>
+    <artifactId>flarepowered</artifactId>
+    <version>23.6.23</version>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>This is the thing that powers Flare Plugins</name>
+            <url>https://maven.pkg.github.com/FlaresDevelopment/flarepowered</url>
+        </repository>
+    </distributionManagement>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.4.1</version>
-                <configuration>
-                    <shadedArtifactAttached>true</shadedArtifactAttached>
-                    <shadedClassifierName>jar-with-dependencies</shadedClassifierName>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>3.5.0</version>
+                    <executions>
+                        <execution>
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>shade</goal>
+                            </goals>
+                            <configuration>
+                                <artifactSet>
+                                    <includes>
+                                        <include>net.kyori.adventure-api</include>
+                                        <include>net.kyori.adventure-key</include>
+                                        <include>net.kyori.adventure-text-minimessage</include>
+                                        <include>net.kyori.examination-api</include>
+                                        <include>net.kyori.examination-string</include>
+                                        <include>com.zaxxer.hikari</include>
+                                    </includes>
+                                </artifactSet>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <dependencies>
@@ -48,6 +66,7 @@
             <groupId>net.kyori</groupId>
             <artifactId>adventure-text-minimessage</artifactId>
             <version>4.13.1</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.cryptomorin</groupId>

@@ -7,8 +7,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="FlarePowered" />
+        <module name="flarepowered" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="FlarePowered" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
