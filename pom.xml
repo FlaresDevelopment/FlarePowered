@@ -6,7 +6,7 @@
 
     <groupId>net.flaredev</groupId>
     <artifactId>flarepowered</artifactId>
-    <version>23.6.23</version>
+    <version>23.6.28</version>
 
     <distributionManagement>
         <repository>
@@ -61,6 +61,11 @@
             <artifactId>api-itemsadder</artifactId>
             <version>3.4.1-r4</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.10.2</version>
         </dependency>
         <dependency>
             <groupId>net.kyori</groupId>

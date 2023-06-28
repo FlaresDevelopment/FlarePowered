@@ -1,12 +1,12 @@
 package net.flarepowered.utils.objects;
 
 public class Pair<T, U> {
-    public final T t;
-    public final U u;
+    public T first;
+    public U second;
 
-    public Pair(T t, U u) {
-        this.t = t;
-        this.u = u;
+    public Pair(T first, U second) {
+        this.first = first;
+        this.second = second;
     }
 
 }
