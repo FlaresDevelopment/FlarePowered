@@ -1,12 +1,12 @@
 package net.flarepowered.core.TML.check;
 
-import net.flarepowered.FlarePowered;
 import net.flarepowered.core.TML.components.Component;
 import net.flarepowered.core.TML.objects.TMLState;
 import net.flarepowered.core.text.StringUtils;
 import net.flarepowered.core.text.other.Replace;
 import net.flarepowered.other.exceptions.ComponentException;
 import net.flarepowered.utils.DependencyManager;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.Locale;
@@ -39,8 +39,8 @@ public class BuyComponent implements Component {
                     if(!DependencyManager.GET.isPluginLoaded(DependencyManager.Dependency.FlareTokens))
                         throw new ComponentException("This server has no economy, so we cant use " + matcher.group());
                     try {
-//                        if(ServiceHandler.SERVICE.getDataService().warpPlayer(player.getUniqueId()).getTokens() >= Integer.parseInt(matcher.group(2))) {
-//                            ServiceHandler.SERVICE.getDataService().warpPlayer(player.getUniqueId()).removeTokens(Integer.parseInt(matcher.group(2)));
+//                        if(TokensPlayer.warpPlayer(player.getUniqueId()).getTokens() >= Integer.parseInt(matcher.group(2))) {
+//                            TokensPlayer.warpPlayer(player.getUniqueId()).removeTokens(Integer.parseInt(matcher.group(2)));
 //                            return TMLState.COMPLETED;
 //                        }
                         player.sendMessage(StringUtils.formatMessageFromLocale("buy_failed", player, new Replace("%pl_amount%", matcher.group(2))));

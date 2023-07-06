@@ -10,11 +10,11 @@ import net.flarepowered.core.TML.components.economy.TokensComponent;
 import net.flarepowered.core.TML.components.menu.CloseMenuComponent;
 import net.flarepowered.core.TML.components.player.*;
 import net.flarepowered.core.TML.objects.TMLArray;
+import net.flarepowered.core.menus.MenuManager;
 import net.flarepowered.core.text.bossbar.BossBarObject;
 import net.flarepowered.core.text.bossbar.BossBarUtils;
 import net.flarepowered.core.text.placeholders.DefaultPlaceholders;
 import net.flarepowered.core.text.placeholders.Placeholder;
-import net.flarepowered.core.ui.UIController;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -26,16 +26,20 @@ import java.util.List;
 public enum FlarePowered {
     LIB;
     private JavaPlugin plugin;
-    private UIController uiController;
     private TMLArray TMLObject;
     private BossBarUtils bossBarUtils;
     private List<Placeholder> placeholders;
+    private MenuManager menuManager;
     
     public void useLib(JavaPlugin plugin) {
         this.plugin = plugin;
-        this.uiController = new UIController();
         loadTMLObject();
         loadDefaults();
+    }
+
+    public void enableMenus() {
+        this.menuManager = new MenuManager();
+        menuManager.onEnable();
     }
 
     public void onDisable() {

@@ -1,16 +1,54 @@
-package net.flarepowered.core.ui.item;
+package net.flarepowered.core.menus.objects.items;
 
-import com.cryptomorin.xseries.XMaterial;
 import dev.lone.itemsadder.api.CustomStack;
 import net.flarepowered.FlarePowered;
+import net.flarepowered.core.menus.objects.XMaterial;
+import net.flarepowered.core.text.StringUtils;
 import net.flarepowered.other.exceptions.ItemBuilderConfigurationException;
 import net.flarepowered.utils.HeadUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Locale;
 import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MaterialStructure {
+
+    public static MaterialStructure getFromString(String mat, Player player) {
+        MaterialStructure materialStructure = new MaterialStructure();
+        if(mat.matches("(?i)\\[(head|username|player|base64|itemsadder)\\] (.+)")) {
+            Pattern pat = Pattern.compile("(?i)\\[(head|username|player|base64|itemsadder)\\] (.+)");
+            Matcher matcher1 = pat.matcher(mat);
+            matcher1.find();
+            switch (matcher1.group(1).toLowerCase(Locale.ROOT)) {
+                case "head":
+                    materialStructure.setToBase64(matcher1.group(2));
+                    break;
+                case "username":
+                    materialStructure.setToPlayerName(StringUtils.formatMessage(matcher1.group(2), player));
+                    break;
+                case "player":
+                    materialStructure.setToPlayerName(player.getName());
+                    break;
+                case "itemsadder":
+                    materialStructure.setItemsAdderItem(matcher1.group(2));
+                    break;
+            }
+        } else
+            materialStructure.setMaterial(StringUtils.formatMessage(mat, player));
+        return materialStructure;
+    }
+
+    public static MaterialStructure fromMaterial(String material) throws ItemBuilderConfigurationException {
+        MaterialStructure materialStructure = new MaterialStructure();
+        materialStructure.setMaterial(material);
+        return materialStructure;
+    }
+
+    /* MATERIAL STRUCTURE CODE ========================--------------------======================= */
 
     public MaterialType materialType = null;
     public String materialString = null;

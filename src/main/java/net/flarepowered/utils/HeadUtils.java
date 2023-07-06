@@ -1,8 +1,8 @@
 package net.flarepowered.utils;
 
-import com.cryptomorin.xseries.XMaterial;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import net.flarepowered.core.menus.objects.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;

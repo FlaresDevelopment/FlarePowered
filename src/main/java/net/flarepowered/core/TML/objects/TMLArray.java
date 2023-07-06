@@ -6,6 +6,7 @@ import net.flarepowered.other.Logger;
 import net.flarepowered.other.exceptions.CheckException;
 import net.flarepowered.other.exceptions.ComponentException;
 import org.bukkit.entity.Player;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -98,7 +99,7 @@ public class TMLArray {
                     Logger.error("An error has spawned, this is the message I got from: " + e.getMessage());
                 }
             }
-        } else if(s.matches("(?i)\\[.*?] (.*)")) {
+        } else if(s.matches("(?i)\\[.*?]\\s?(.*)?")) {
             for(Component com : components) {
                 try {
                     TMLState state = com.run(s, player);
@@ -117,7 +118,10 @@ public class TMLArray {
     }
 
     public void addComponent(Component... com) {
-        this.components.addAll(Arrays.asList(com));
+        List<Component> temp = new ArrayList<>();
+        temp.addAll(Arrays.asList(com));
+        temp.addAll(components);
+        this.components = temp;
     }
 
     public List<Requirement> getRequirements() {
