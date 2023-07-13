@@ -6,6 +6,7 @@ import net.flarepowered.core.text.cache.ImageCache;
 import net.flarepowered.core.text.images.ImageMessage;
 import net.flarepowered.core.text.other.Replace;
 import net.flarepowered.core.text.placeholders.PlaceholderParser;
+import net.flarepowered.other.Logger;
 import net.flarepowered.utils.VersionControl;
 import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ChatMessageType;
@@ -91,6 +92,10 @@ public class StringUtils {
         if(player != null)
             if(lang.containsKey(player.getLocale().toLowerCase().split("_")[1]))
                 selected = player.getLocale().toLowerCase().split("_")[1];
+        if(!lang.get(selected).contains(message)) {
+            Logger.error("Your locale " + lang.get(selected).getName() + " has no " + message + " path!");
+            return "";
+        }
         message = lang.get(selected).getString(message);
         assert message != null;
         message = message.replace("%pl_prefix%", Objects.requireNonNull(lang.get(selected).getString("prefix")));
@@ -102,6 +107,10 @@ public class StringUtils {
         if(player != null)
             if(lang.containsKey(player.getLocale().toLowerCase().split("_")[1]))
                 selected = player.getLocale().toLowerCase().split("_")[1];
+        if(!lang.get(selected).contains(message)) {
+            Logger.error("Your locale " + lang.get(selected).getName() + " has no " + message + " path!");
+            return "";
+        }
         message = lang.get(selected).getString(message);
         assert message != null;
         message = message.replace("%pl_prefix%", Objects.requireNonNull(lang.get(selected).getString("prefix")));
@@ -119,16 +128,17 @@ public class StringUtils {
             return lang.get(default_lang);
     }
 
-    public static void reloadLang(final Player player) {
-        lang.forEach((s, yamlFile) -> System.out.println("add reload logic"));
+    public static void reloadLang(final Path path) {
+        lang.clear();
+        loadLang(path);
     }
 
     public static void loadLang(final Path path) {
         try (Stream<Path> paths = Files.walk(path)) {
             paths.filter(Files::isRegularFile)
-                 .forEach(a -> lang.put(String.valueOf(a.getFileName()).replace(".yml", ""),
-                         YamlConfiguration.loadConfiguration(new File(a.toString()))
-                 ));
+                    .forEach(a -> lang.put(String.valueOf(a.getFileName()).replace(".yml", ""),
+                            YamlConfiguration.loadConfiguration(new File(a.toString()))
+                    ));
         } catch (IOException e) {
             e.printStackTrace();
         }

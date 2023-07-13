@@ -20,9 +20,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class FlareItem {
@@ -166,5 +163,135 @@ public class FlareItem {
         im.hasItemFlag(ItemFlag.HIDE_UNBREAKABLE);
         itemStack.setItemMeta(im);
         return itemStack;
+    }
+
+    /* GETTERS */
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public ItemType getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(ItemType itemType) {
+        this.itemType = itemType;
+    }
+
+    public boolean isUpdate() {
+        return update;
+    }
+
+    public void setUpdate(boolean update) {
+        this.update = update;
+    }
+
+    public List<String> getClickCommands() {
+        return clickCommands;
+    }
+
+    public void setClickCommands(List<String> clickCommands) {
+        this.clickCommands = clickCommands;
+    }
+
+    public List<String> getOnItemPlaceCommands() {
+        return onItemPlaceCommands;
+    }
+
+    public void setOnItemPlaceCommands(List<String> onItemPlaceCommands) {
+        this.onItemPlaceCommands = onItemPlaceCommands;
+    }
+
+    public List<String> getOnUpdateCommands() {
+        return onUpdateCommands;
+    }
+
+    public void setOnUpdateCommands(List<String> onUpdateCommands) {
+        this.onUpdateCommands = onUpdateCommands;
+    }
+
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public List<String> getLore() {
+        return lore;
+    }
+
+    public void setLore(List<String> lore) {
+        this.lore = lore;
+    }
+
+    public List<String> getViewRequirementList() {
+        return viewRequirementList;
+    }
+
+    public void setViewRequirementList(List<String> viewRequirementList) {
+        this.viewRequirementList = viewRequirementList;
+    }
+
+    public int getCustomModelData() {
+        return customModelData;
+    }
+
+    public void setCustomModelData(int customModelData) {
+        this.customModelData = customModelData;
+    }
+
+    public Color getHorseColor() {
+        return horseColor;
+    }
+
+    public void setHorseColor(Color horseColor) {
+        this.horseColor = horseColor;
+    }
+
+    public boolean isGlow() {
+        return glow;
+    }
+
+    public void setGlow(boolean glow) {
+        this.glow = glow;
     }
 }

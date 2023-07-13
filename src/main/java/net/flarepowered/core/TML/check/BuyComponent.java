@@ -6,7 +6,6 @@ import net.flarepowered.core.text.StringUtils;
 import net.flarepowered.core.text.other.Replace;
 import net.flarepowered.other.exceptions.ComponentException;
 import net.flarepowered.utils.DependencyManager;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.Locale;
