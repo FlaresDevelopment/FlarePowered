@@ -15,6 +15,7 @@ import java.util.List;
 public class BossBarObject {
 
     public String id;
+    public boolean enableDecreaseAnimation;
     public Player owner;
     public int screenTime;
     public int timePassed;
@@ -31,7 +32,7 @@ public class BossBarObject {
         if(id == null) {
             Logger.error("The bossbar is missing an ID! message=(" + title+ ")");
         }
-        this.bossBar =  Bukkit.createBossBar(StringUtils.formatMessage(title, owner), barColor, barStyle);
+        this.bossBar = Bukkit.createBossBar(StringUtils.formatMessage(title, owner), barColor, barStyle);
     }
 
     public void update() {

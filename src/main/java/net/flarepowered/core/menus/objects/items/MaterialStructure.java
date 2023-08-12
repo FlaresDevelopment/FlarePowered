@@ -5,6 +5,7 @@ import net.flarepowered.FlarePowered;
 import net.flarepowered.core.menus.objects.XMaterial;
 import net.flarepowered.core.text.StringUtils;
 import net.flarepowered.other.exceptions.ItemBuilderConfigurationException;
+import net.flarepowered.utils.DependencyManager;
 import net.flarepowered.utils.HeadUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -126,6 +127,18 @@ public class MaterialStructure {
             default:
                 throw new ItemBuilderConfigurationException("The item was null, you have a type: " + materialType + " and a key: " + materialString);
         }
+    }
+
+    public static MaterialStructure getFromItemStack(ItemStack item) {
+        MaterialStructure materialStructure = new MaterialStructure();
+        if(DependencyManager.GET.isPluginLoaded(DependencyManager.Dependency.ItemsAdder)) {
+            CustomStack stack = CustomStack.byItemStack(item);
+            if (stack != null)
+                return materialStructure.setItemsAdderItem(stack.getId());
+        }
+        if(item.getType().equals(XMaterial.PLAYER_HEAD.parseItem().getType()))
+            return materialStructure.setToBase64(HeadUtils.getBase64FromHead(item));
+        return materialStructure.setMaterial(item.getType().toString());
     }
 
     @Override

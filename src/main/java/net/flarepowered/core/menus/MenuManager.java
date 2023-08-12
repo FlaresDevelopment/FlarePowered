@@ -116,13 +116,13 @@ public class MenuManager implements Listener {
                 // Recheck views requirements
                 if(lastTimeForItemsUpdate < System.currentTimeMillis()) {
                     for(MenuRender menu : menusInRender.values()) {
-                        menu.updateItems(true, true);
+                        menu.updateItems(true, true, false);
                     }
                     lastTimeForItemsUpdate = System.currentTimeMillis() + 5000;
                 }
                 // Updates just items one time per second.
                 for(MenuRender menu : menusInRender.values()) {
-                    menu.updateItems(false, true);
+                    menu.updateItems(false, true, false);
                 }
             }
         }.runTaskTimerAsynchronously(FlarePowered.LIB.getPlugin(), 0, 10);

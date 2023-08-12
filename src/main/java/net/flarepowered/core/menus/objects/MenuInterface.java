@@ -16,7 +16,7 @@ public class MenuInterface {
     public InventoryType inventoryType;
     public boolean enableInteractions;
     // PAGE - SLOT - ITEM
-    public HashMap<Integer, HashMap<Byte, LinkedList<FlareItem>>> items;
+    public HashMap<Integer, HashMap<Byte, LinkedList<FlareItem>>> items = new HashMap<>();
 
     public void assignItem(int page, FlareItem item) {
         if(item.itemType != ItemType.NORMAL)
@@ -28,8 +28,6 @@ public class MenuInterface {
     }
 
     void addToSlot(int page, byte slot, FlareItem item) {
-        if (items == null)
-            items = new HashMap<>();
         if(!items.containsKey(page))
             items.put(page, new HashMap<>());
         if (!items.get(page).containsKey(slot)) {

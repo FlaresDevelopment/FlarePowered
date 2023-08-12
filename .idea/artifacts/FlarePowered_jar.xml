@@ -2,8 +2,8 @@
   <artifact type="jar" name="FlarePowered:jar">
     <output-path>$PROJECT_DIR$/../Jars</output-path>
     <root id="archive" name="flarepowered.jar">
-      <element id="module-output" name="flarepowered" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/zaxxer/HikariCP/4.0.3/HikariCP-4.0.3.jar" path-in-jar="/" />
+      <element id="module-output" name="FlarePowered" />
     </root>
   </artifact>
 </component>

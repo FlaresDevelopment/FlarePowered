@@ -27,7 +27,8 @@ public class BossBarUtils implements Listener {
                         if(object.screenTime != -1) {
                             if(object.screenTime > object.timePassed) {
                                 object.timePassed ++;
-//                                if(object.)
+                                if(object.enableDecreaseAnimation)
+                                    object.bossBar.setProgress((double) object.timePassed /object.screenTime);
                             } else {
                                 removeBossBarToPlayer(object.owner, object.id);
                             }

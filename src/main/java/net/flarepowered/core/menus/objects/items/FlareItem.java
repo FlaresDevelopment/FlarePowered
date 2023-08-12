@@ -126,11 +126,13 @@ public class FlareItem {
             Logger.error("You tried to put " + range + " as a slot range but it failed.");
         }
     }
-    public void setSlots(List<Byte> list) {
+    public FlareItem setSlots(List<Byte> list) {
         slot.addAll(list);
+        return this;
     }
-    public void setSlot(Byte s) {
+    public FlareItem setSlot(Byte s) {
         slot.add(s);
+        return this;
     }
 
     public boolean canBeViewed (Player player) {
@@ -171,127 +173,170 @@ public class FlareItem {
         return page;
     }
 
-    public void setPage(int page) {
+    public FlareItem setPage(int page) {
         this.page = page;
+        return this;
     }
 
     public int getPriority() {
         return priority;
     }
 
-    public void setPriority(int priority) {
+    public FlareItem setPriority(int priority) {
         this.priority = priority;
+        return this;
+    }
+
+    public boolean isCanBeViewed() {
+        return canBeViewed;
+    }
+
+    public FlareItem setCanBeViewed(boolean canBeViewed) {
+        this.canBeViewed = canBeViewed;
+        return this;
     }
 
     public ItemType getItemType() {
         return itemType;
     }
 
-    public void setItemType(ItemType itemType) {
+    public FlareItem setItemType(ItemType itemType) {
         this.itemType = itemType;
+        return this;
     }
 
     public boolean isUpdate() {
         return update;
     }
 
-    public void setUpdate(boolean update) {
+    public FlareItem setUpdate(boolean update) {
         this.update = update;
+        return this;
+    }
+
+    public boolean isReactive() {
+        return reactive;
+    }
+
+    public FlareItem setReactive(boolean reactive) {
+        this.reactive = reactive;
+        return this;
+    }
+
+    public Pair<String, String> getReactiveConfig() {
+        return reactiveConfig;
+    }
+
+    public FlareItem setReactiveConfig(Pair<String, String> reactiveConfig) {
+        this.reactiveConfig = reactiveConfig;
+        return this;
     }
 
     public List<String> getClickCommands() {
         return clickCommands;
     }
 
-    public void setClickCommands(List<String> clickCommands) {
+    public FlareItem setClickCommands(List<String> clickCommands) {
         this.clickCommands = clickCommands;
+        return this;
     }
 
     public List<String> getOnItemPlaceCommands() {
         return onItemPlaceCommands;
     }
 
-    public void setOnItemPlaceCommands(List<String> onItemPlaceCommands) {
+    public FlareItem setOnItemPlaceCommands(List<String> onItemPlaceCommands) {
         this.onItemPlaceCommands = onItemPlaceCommands;
+        return this;
     }
 
     public List<String> getOnUpdateCommands() {
         return onUpdateCommands;
     }
 
-    public void setOnUpdateCommands(List<String> onUpdateCommands) {
+    public FlareItem setOnUpdateCommands(List<String> onUpdateCommands) {
         this.onUpdateCommands = onUpdateCommands;
+        return this;
     }
 
     public String getMaterial() {
         return material;
     }
 
-    public void setMaterial(String material) {
+    public FlareItem setMaterial(String material) {
         this.material = material;
+        return this;
     }
 
     public int getDamage() {
         return damage;
     }
 
-    public void setDamage(int damage) {
+    public FlareItem setDamage(int damage) {
         this.damage = damage;
+        return this;
     }
 
     public int getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public FlareItem setAmount(int amount) {
         this.amount = amount;
+        return this;
     }
 
     public String getDisplayName() {
         return displayName;
     }
 
-    public void setDisplayName(String displayName) {
+    public FlareItem setDisplayName(String displayName) {
         this.displayName = displayName;
+        return this;
     }
 
     public List<String> getLore() {
         return lore;
     }
 
-    public void setLore(List<String> lore) {
+    public FlareItem setLore(List<String> lore) {
         this.lore = lore;
+        return this;
     }
 
     public List<String> getViewRequirementList() {
         return viewRequirementList;
     }
 
-    public void setViewRequirementList(List<String> viewRequirementList) {
+    public FlareItem setViewRequirementList(List<String> viewRequirementList) {
         this.viewRequirementList = viewRequirementList;
+        return this;
     }
 
     public int getCustomModelData() {
         return customModelData;
     }
 
-    public void setCustomModelData(int customModelData) {
+    public FlareItem setCustomModelData(int customModelData) {
         this.customModelData = customModelData;
+        return this;
     }
 
     public Color getHorseColor() {
         return horseColor;
     }
 
-    public void setHorseColor(Color horseColor) {
+    public FlareItem setHorseColor(Color horseColor) {
         this.horseColor = horseColor;
+        return this;
     }
 
     public boolean isGlow() {
         return glow;
     }
 
-    public void setGlow(boolean glow) {
+    public FlareItem setGlow(boolean glow) {
         this.glow = glow;
+        return this;
     }
 }

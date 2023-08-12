@@ -33,7 +33,7 @@ public class MenuRender {
         this.menuInterface = menuInterface;
         buildInventory();
         createRender();
-        updateItems(true, async);
+        updateItems(true, async, true);
     }
 
     private void buildInventory() {
@@ -81,10 +81,10 @@ public class MenuRender {
         }
     }
 
-    public void updateItems(boolean withItems, boolean async) {
+    public void updateItems(boolean withItems, boolean async, boolean ignoreUpdatePropriety) {
         if (withItems) createRender();
         for (byte slot : inRender.get(page).keySet()) {
-            if (inRender.get(page).get(slot).first.update) {
+            if (inRender.get(page).get(slot).first.update || ignoreUpdatePropriety) {
                 inRender.get(page).get(slot).first = menuInterface.items.get(page).get(slot).get(inRender.get(page).get(slot).second);
                 try {
                     if (showItemConditions(inRender.get(page).get(slot).first))
