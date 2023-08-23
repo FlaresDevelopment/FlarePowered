@@ -175,7 +175,7 @@ public class FlareItem {
             im.setLore(lore.stream()
                     .map(lore -> StringUtils.formatMessage(lore, player))
                     .collect(Collectors.toCollection(ArrayList::new)));
-        if(!material.contains("itemsadder") || !material.contains("executableitems")) {
+        if(!material.contains("itemsadder") ^ !material.contains("executableitems")) {
             if (VersionControl.getVersion() > 13)
                 im.setCustomModelData(customModelData);
         }

@@ -42,7 +42,7 @@ public class MaterialStructure {
                     materialStructure.setItemsAdderItem(matcher1.group(2));
                     break;
                 case "executableitems":
-                    materialStructure.setItemsAdderItem(matcher1.group(2));
+                    materialStructure.setExecutableItemsItem(matcher1.group(2));
                     break;
             }
         } else
