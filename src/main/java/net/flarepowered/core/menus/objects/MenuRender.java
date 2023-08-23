@@ -40,9 +40,9 @@ public class MenuRender {
         if(inventory != null)
             return;
         if(!menuInterface.inventoryType.equals(InventoryType.CHEST))
-            inventory = Bukkit.createInventory(owner, menuInterface.inventoryType, menuInterface.title);
+            inventory = Bukkit.createInventory(owner, menuInterface.inventoryType, StringUtils.formatMessage(menuInterface.title, owner));
         else
-            inventory = Bukkit.createInventory(owner, menuInterface.menuSize, menuInterface.title);
+            inventory = Bukkit.createInventory(owner, menuInterface.menuSize, StringUtils.formatMessage(menuInterface.title, owner));
     }
 
     public void createRender() {

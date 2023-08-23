@@ -93,6 +93,7 @@ public class FlareItem {
             this.update = config.getBoolean(path + ".update");
         Pattern pat = Pattern.compile("(?i)(\\[(LEFT|SHIFT_LEFT|RIGHT|SHIFT_RIGHT|MIDDLE|NUMBER_KEY|DOUBLE_CLICK|DROP|CONTROL_DROP|SWAP_OFFHAND)\\])?(.+)");
         if (config.contains(path + ".click_commands")) {
+            this.clickCommands = new ArrayList<>();
             for(String s : config.getStringList(path + ".click_commands")) {
                 Matcher matcher = pat.matcher(s);
                 if(!matcher.matches())
@@ -174,7 +175,7 @@ public class FlareItem {
             im.setLore(lore.stream()
                     .map(lore -> StringUtils.formatMessage(lore, player))
                     .collect(Collectors.toCollection(ArrayList::new)));
-        if(!material.contains("itemsadder")) {
+        if(!material.contains("itemsadder") || !material.contains("executableitems")) {
             if (VersionControl.getVersion() > 13)
                 im.setCustomModelData(customModelData);
         }

@@ -1,5 +1,8 @@
 package net.flarepowered.core.menus.objects.items;
 
+import com.ssomar.score.api.executableitems.ExecutableItemsAPI;
+import com.ssomar.score.api.executableitems.config.ExecutableItemInterface;
+import com.ssomar.score.api.executableitems.config.ExecutableItemsManagerInterface;
 import dev.lone.itemsadder.api.CustomStack;
 import net.flarepowered.FlarePowered;
 import net.flarepowered.core.menus.objects.XMaterial;
@@ -12,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Locale;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,8 +24,8 @@ public class MaterialStructure {
 
     public static MaterialStructure getFromString(String mat, Player player) {
         MaterialStructure materialStructure = new MaterialStructure();
-        if(mat.matches("(?i)\\[(head|username|player|base64|itemsadder)\\] (.+)")) {
-            Pattern pat = Pattern.compile("(?i)\\[(head|username|player|base64|itemsadder)\\] (.+)");
+        if(mat.matches("(?i)\\[(head|username|player|base64|itemsadder|executableitems)\\] (.+)")) {
+            Pattern pat = Pattern.compile("(?i)\\[(head|username|player|base64|itemsadder|executableitems)\\] (.+)");
             Matcher matcher1 = pat.matcher(mat);
             matcher1.find();
             switch (matcher1.group(1).toLowerCase(Locale.ROOT)) {
@@ -35,6 +39,9 @@ public class MaterialStructure {
                     materialStructure.setToPlayerName(player.getName());
                     break;
                 case "itemsadder":
+                    materialStructure.setItemsAdderItem(matcher1.group(2));
+                    break;
+                case "executableitems":
                     materialStructure.setItemsAdderItem(matcher1.group(2));
                     break;
             }
@@ -98,6 +105,16 @@ public class MaterialStructure {
 
     /**
      * This will take the item from ItemsAdder
+     * @param id the item id
+     */
+    public MaterialStructure setExecutableItemsItem(String id) {
+        this.materialString = id;
+        this.materialType = MaterialType.EXECUTABLE_ITEMS;
+        return this;
+    }
+
+    /**
+     * This will take the item from ExecutableItems
      * @param namespaceId add the item namespace id
      */
     public MaterialStructure setItemsAdderItem(String namespaceId) {
@@ -122,6 +139,15 @@ public class MaterialStructure {
                     FlarePowered.LIB.getPlugin().getLogger().log(Level.SEVERE, "The item you tried to show is null, ItemsAdder cant find the item.");
                 else
                     return stack.getItemStack();
+            case EXECUTABLE_ITEMS:
+                if(!DependencyManager.GET.isPluginLoaded(DependencyManager.Dependency.ExecutableItems))
+                    throw new ItemBuilderConfigurationException("The items you tried to show is trying to get an item from ItemsAdder, but the plugin is not loaded or is not installed.");
+                if(!ExecutableItemsAPI.getExecutableItemsManager().isValidID(materialString))
+                    throw new ItemBuilderConfigurationException("The item you tried to show is null, ItemsAdder cant find the item.");
+                Optional<ExecutableItemInterface> eiOptional = ExecutableItemsAPI.getExecutableItemsManager().getExecutableItem(materialString);
+                if(eiOptional.isEmpty())
+                    throw new ItemBuilderConfigurationException("Ups.. ExecutableItems implementation went wrong :(");
+                return eiOptional.get().buildItem(1, Optional.empty());
             case PLAYER_HEAD:
                 return HeadUtils.getHeadFromName(Bukkit.getOfflinePlayer(materialString));
             default:
@@ -171,5 +197,6 @@ public class MaterialStructure {
         PLAYER_HEAD,
         BASE64_HEAD,
         ITEMS_ADDER,
+        EXECUTABLE_ITEMS,
     }
 }
