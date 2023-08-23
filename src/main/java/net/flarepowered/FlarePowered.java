@@ -15,6 +15,7 @@ import net.flarepowered.core.text.bossbar.BossBarObject;
 import net.flarepowered.core.text.bossbar.BossBarUtils;
 import net.flarepowered.core.text.placeholders.DefaultPlaceholders;
 import net.flarepowered.core.text.placeholders.Placeholder;
+import net.flarepowered.utils.DependencyManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;

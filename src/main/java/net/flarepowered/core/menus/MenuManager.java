@@ -138,7 +138,7 @@ public class MenuManager implements Listener {
 //    EVENTS =====================================
 
     @EventHandler
-    public void onClick(InventoryClickEvent event) {
+    private void onClick(InventoryClickEvent event) {
         UUID player = event.getWhoClicked().getUniqueId();
         if(!menusInRender.containsKey(player))
             return;
@@ -155,11 +155,11 @@ public class MenuManager implements Listener {
         }
         if(!menusInRender.get(player).inRender.get(menusInRender.get(player).page).containsKey((byte) event.getRawSlot()))
             return;
-        menusInRender.get(player).inRender.get(menusInRender.get(player).page).get((byte) event.getRawSlot()).first.onClickCommands((Player) event.getWhoClicked());
+        menusInRender.get(player).inRender.get(menusInRender.get(player).page).get((byte) event.getRawSlot()).first.onClickCommands((Player) event.getWhoClicked(), event.getClick());
     }
 
     @EventHandler
-    public void onInventoryPlaceEvent(InventoryDragEvent event) {
+    private void onInventoryPlaceEvent(InventoryDragEvent event) {
         UUID player = event.getWhoClicked().getUniqueId();
         if(!menusInRender.containsKey(player))
             return;

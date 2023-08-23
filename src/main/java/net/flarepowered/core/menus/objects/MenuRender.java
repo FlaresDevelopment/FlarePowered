@@ -101,6 +101,8 @@ public class MenuRender {
     }
 
     private boolean showItemConditions(FlareItem item) {
+        if(item.material.contains("[empty]"))
+            return false;
         if(!item.canBeViewed(owner))
             return false;
         if(!item.itemType.equals(ItemType.NORMAL))

@@ -13,6 +13,7 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -20,6 +21,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class FlareItem {
@@ -32,7 +36,7 @@ public class FlareItem {
     public boolean update;
     public boolean reactive;
     public Pair<String, String> reactiveConfig;
-    public List<String> clickCommands;
+    public List<Pair<String, ClickType>> clickCommands;
     public List<String> onItemPlaceCommands;
     public List<String> onUpdateCommands;
 
@@ -61,10 +65,17 @@ public class FlareItem {
         return this;
     }
 
-    public void onClickCommands(Player player) {
+    public void onClickCommands(Player player, ClickType type) {
         if(clickCommands == null)
             return;
-        List<String> commands = clickCommands.stream().map(clickCommand -> StringUtils.formatMessage(clickCommand, player)).collect(Collectors.toCollection(ArrayList::new));
+        List<String> commands = new ArrayList<>();
+        for(Pair<String, ClickType> actual : clickCommands) {
+            if(actual.second != null) {
+                if(actual.second.equals(type))
+                    commands.add(StringUtils.formatMessage(actual.first, player));
+            } else
+                commands.add(StringUtils.formatMessage(actual.first, player));
+        }
         FlareScript flareScript = new FlareScript();
         flareScript.processFull(commands, player);
     }
@@ -80,8 +91,17 @@ public class FlareItem {
         else throw new ItemBuilderConfigurationException("The item from " + path + " has no display name.");
         if (config.contains(path + ".update"))
             this.update = config.getBoolean(path + ".update");
-        if (config.contains(path + ".click_commands"))
-            this.clickCommands = config.getStringList(path + ".click_commands");
+        Pattern pat = Pattern.compile("(?i)(\\[(LEFT|SHIFT_LEFT|RIGHT|SHIFT_RIGHT|MIDDLE|NUMBER_KEY|DOUBLE_CLICK|DROP|CONTROL_DROP|SWAP_OFFHAND)\\])?(.+)");
+        if (config.contains(path + ".click_commands")) {
+            for(String s : config.getStringList(path + ".click_commands")) {
+                Matcher matcher = pat.matcher(s);
+                if(!matcher.matches())
+                    continue;
+                if(matcher.group(2) != null)
+                    clickCommands.add(new Pair<>(matcher.group(3).trim(), ClickType.valueOf(matcher.group(2).toUpperCase(Locale.ROOT))));
+                else clickCommands.add(new Pair<>(matcher.group(3).trim(), null));
+            }
+        }
         try {
             if (config.contains(path + ".slot")) {
                 String value = config.getString(path + ".slot");
@@ -154,8 +174,10 @@ public class FlareItem {
             im.setLore(lore.stream()
                     .map(lore -> StringUtils.formatMessage(lore, player))
                     .collect(Collectors.toCollection(ArrayList::new)));
-        if (VersionControl.getVersion() > 13)
-            im.setCustomModelData(customModelData);
+        if(!material.contains("itemsadder")) {
+            if (VersionControl.getVersion() > 13)
+                im.setCustomModelData(customModelData);
+        }
         if (glow) {
             itemStack.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 1);
             im.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -229,15 +251,6 @@ public class FlareItem {
 
     public FlareItem setReactiveConfig(Pair<String, String> reactiveConfig) {
         this.reactiveConfig = reactiveConfig;
-        return this;
-    }
-
-    public List<String> getClickCommands() {
-        return clickCommands;
-    }
-
-    public FlareItem setClickCommands(List<String> clickCommands) {
-        this.clickCommands = clickCommands;
         return this;
     }
 
