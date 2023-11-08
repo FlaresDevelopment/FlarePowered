@@ -11,12 +11,10 @@ import net.flarepowered.core.TML.components.menu.CloseMenuComponent;
 import net.flarepowered.core.TML.components.player.*;
 import net.flarepowered.core.TML.objects.TMLArray;
 import net.flarepowered.core.menus.MenuManager;
-import net.flarepowered.core.text.bossbar.BossBarObject;
+import net.flarepowered.core.text.MessageEngine;
 import net.flarepowered.core.text.bossbar.BossBarUtils;
 import net.flarepowered.core.text.placeholders.DefaultPlaceholders;
 import net.flarepowered.core.text.placeholders.Placeholder;
-import net.flarepowered.utils.DependencyManager;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -31,23 +29,28 @@ public enum FlarePowered {
     private BossBarUtils bossBarUtils;
     private List<Placeholder> placeholders;
     private MenuManager menuManager;
+    private MessageEngine messageEngine;
     
     public void useLib(JavaPlugin plugin) {
         this.plugin = plugin;
+        this.messageEngine = new MessageEngine();
+        messageEngine.start();
         loadTMLObject();
         loadDefaults();
+    }
+
+    public void onDisable() {
+        messageEngine.disable();
+        if(bossBarUtils != null)
+            bossBarUtils.bossbars.keySet().forEach(uuid -> {
+                if(Bukkit.getPlayer(uuid) != null)
+                    bossBarUtils.clearBossBarsFromPlayer(Bukkit.getPlayer(uuid));
+            });
     }
 
     public void enableMenus() {
         this.menuManager = new MenuManager();
         menuManager.onEnable();
-    }
-
-    public void onDisable() {
-        bossBarUtils.bossbars.keySet().forEach(uuid -> {
-            if(Bukkit.getPlayer(uuid) != null)
-                bossBarUtils.clearBossBarsFromPlayer(Bukkit.getPlayer(uuid));
-        });
     }
 
     public void enableBossBars() {
@@ -71,7 +74,7 @@ public enum FlarePowered {
         TMLObject.addComponent(new ConsoleComponent(), new ServerSwitchComponent(), new TitleComponent(), new SudoComponent(), new SoundComponent(),
                 new PlayerComponent(), new MessageComponent(), new EffectComponent(), new BossbarComponent(), new ActionBarComponent(), new CloseMenuComponent(),
                 new MobcoinsComponent(), new MoneyComponent(), new TokensComponent(), new BuyComponent());
-        TMLObject.addRequirement(new net.flares.lib.TML.check.ExpressionCheck(), new ItemCheck(), new JavaScriptCheck(), new MoneyCheck(), new PermissionCheck());
+        TMLObject.addRequirement(new ExpressionCheck(), new ItemCheck(), new JavaScriptCheck(), new MoneyCheck(), new PermissionCheck());
     }
 
 }

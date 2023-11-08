@@ -1,34 +1,28 @@
-package net.flarepowered.core.text;
+package net.flarepowered.core.text.other;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.flarepowered.FlarePowered;
 import net.flarepowered.core.text.cache.ImageCache;
 import net.flarepowered.core.text.images.ImageMessage;
-import net.flarepowered.core.text.other.Replace;
 import net.flarepowered.core.text.placeholders.PlaceholderParser;
 import net.flarepowered.other.Logger;
 import net.flarepowered.utils.VersionControl;
-import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+@Deprecated
 public class StringUtils {
 
     //TODO add cache clean up!
@@ -37,26 +31,26 @@ public class StringUtils {
     public static String default_lang = "en";
 
     public static void sendImageMessageToPlayer(final String URL, final boolean isWebURL, final ImageCharacters imageCharacters, final Player player, String... content) {
-        ImageCache cache = new ImageCache(URL, content);
-        if(imageCache.containsKey(cache)) {
-            imageCache.get(cache).sendToPlayer(player);
-            return;
-        }
-        new BukkitRunnable() {
-            @Override public void run() {
-                try {
-                    BufferedImage imageToSend;
-                    if (isWebURL)
-                        imageToSend = ImageIO.read(new URL(URL));
-                    else
-                        imageToSend =  ImageIO.read(new File(URL));
-                    imageCache.put(cache, new ImageMessage(imageToSend, 8, imageCharacters.getChar(), player).appendText(content));
-                    imageCache.get(cache).sendToPlayer(player);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }.runTaskAsynchronously(FlarePowered.LIB.getPlugin());
+//        ImageCache cache = new ImageCache(URL, content);
+//        if(imageCache.containsKey(cache)) {
+//            imageCache.get(cache).sendToPlayer(player);
+//            return;
+//        }
+//        new BukkitRunnable() {
+//            @Override public void run() {
+//                try {
+//                    BufferedImage imageToSend;
+//                    if (isWebURL)
+//                        imageToSend = ImageIO.read(new URL(URL));
+//                    else
+//                        imageToSend =  ImageIO.read(new File(URL));
+//                    imageCache.put(cache, new ImageMessage(imageToSend, 8, imageCharacters.getChar(), player).appendText(content));
+//                    imageCache.get(cache).sendToPlayer(player);
+//                } catch (IOException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
+//        }.runTaskAsynchronously(FlarePowered.LIB.getPlugin());
     }
 
     public static void sendTitleMessageToPlayer(final Player player, final String title, final String subtitle, int fadeIn, int stay, int fadeOut) {
@@ -145,16 +139,6 @@ public class StringUtils {
     }
 
     /**
-     * This will make you a MiniMessage component
-     * @param message the message
-     * @param player The player for placeholders
-     * @return the component
-     */
-    public static Component formatToComponent(final String message, final Player player) {
-        return formatToComponent(message, FormatFlags.WITH_PLACEHOLDERS, FormatFlags.WITH_COLORS);
-    }
-
-    /**
      * This will format the string with the format flags.
      * @param s the string.
      * @param flags all the flags for formatting
@@ -170,16 +154,6 @@ public class StringUtils {
         // Colors (MiniMessage)
         // TODO implement MiniMessage colors support.
         return s;
-    }
-
-    /**
-     * This will format the string with the format flags.
-     * @param s the string.
-     * @param flags all the flags for formatting
-     * @return the string formatted
-     */
-    private static Component formatToComponent(String s, FormatFlags... flags) {
-        return Component.text(s);
     }
 
     enum FormatFlags {

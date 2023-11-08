@@ -3,11 +3,8 @@ package net.flarepowered.core.TML.components.menu;
 import net.flarepowered.FlarePowered;
 import net.flarepowered.core.TML.components.Component;
 import net.flarepowered.core.TML.objects.TMLState;
-import net.flarepowered.core.menus.MenuManager;
-import net.flarepowered.core.text.StringUtils;
 import net.flarepowered.other.exceptions.ComponentException;
 import net.flarepowered.other.exceptions.MenuRenderException;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.regex.Matcher;

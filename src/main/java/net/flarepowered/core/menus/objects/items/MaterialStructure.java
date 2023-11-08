@@ -2,11 +2,10 @@ package net.flarepowered.core.menus.objects.items;
 
 import com.ssomar.score.api.executableitems.ExecutableItemsAPI;
 import com.ssomar.score.api.executableitems.config.ExecutableItemInterface;
-import com.ssomar.score.api.executableitems.config.ExecutableItemsManagerInterface;
 import dev.lone.itemsadder.api.CustomStack;
 import net.flarepowered.FlarePowered;
 import net.flarepowered.core.menus.objects.XMaterial;
-import net.flarepowered.core.text.StringUtils;
+import net.flarepowered.core.text.Message;
 import net.flarepowered.other.exceptions.ItemBuilderConfigurationException;
 import net.flarepowered.utils.DependencyManager;
 import net.flarepowered.utils.HeadUtils;
@@ -33,7 +32,7 @@ public class MaterialStructure {
                     materialStructure.setToBase64(matcher1.group(2));
                     break;
                 case "username":
-                    materialStructure.setToPlayerName(StringUtils.formatMessage(matcher1.group(2), player));
+                    materialStructure.setToPlayerName(Message.format(matcher1.group(2), player));
                     break;
                 case "player":
                     materialStructure.setToPlayerName(player.getName());
@@ -46,7 +45,7 @@ public class MaterialStructure {
                     break;
             }
         } else
-            materialStructure.setMaterial(StringUtils.formatMessage(mat, player));
+            materialStructure.setMaterial(Message.format(mat, player));
         return materialStructure;
     }
 

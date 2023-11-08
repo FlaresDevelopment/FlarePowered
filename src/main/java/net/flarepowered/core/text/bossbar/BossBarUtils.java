@@ -1,9 +1,7 @@
 package net.flarepowered.core.text.bossbar;
 
 import net.flarepowered.FlarePowered;
-import net.flarepowered.core.text.StringUtils;
 import net.flarepowered.core.text.bossbar.schematics.BossbarSchematic;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

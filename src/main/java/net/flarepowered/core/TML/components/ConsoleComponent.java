@@ -1,7 +1,7 @@
 package net.flarepowered.core.TML.components;
 
 import net.flarepowered.core.TML.objects.TMLState;
-import net.flarepowered.core.text.StringUtils;
+import net.flarepowered.core.text.Message;
 import net.flarepowered.other.exceptions.ComponentException;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -18,7 +18,7 @@ public class ConsoleComponent implements Component {
         if(matcher.find()) {
             if(matcher.group(1) == null)
                 throw new ComponentException("The component [CONSOLE] has no command. We are skipping this item.");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), StringUtils.formatMessage(matcher.group(1), player));
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), Message.format(matcher.group(1), player));
             return TMLState.COMPLETED;
         }
         return TMLState.NOT_A_MATCH;

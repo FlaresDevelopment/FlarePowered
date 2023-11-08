@@ -13,6 +13,7 @@ public class MenuInterface {
 
     public String title;
     public byte menuSize;
+    public boolean itemsUpdates = false;
     public InventoryType inventoryType;
     public boolean enableInteractions;
     // PAGE - SLOT - ITEM

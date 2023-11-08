@@ -18,10 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class MenuManager implements Listener {
 
@@ -116,16 +113,17 @@ public class MenuManager implements Listener {
                 // Recheck views requirements
                 if(lastTimeForItemsUpdate < System.currentTimeMillis()) {
                     for(MenuRender menu : menusInRender.values()) {
-                        menu.updateItems(true, true, false);
+                        if(menu.itemUpdates)
+                            menu.updateMenuItems(true, false);
                     }
                     lastTimeForItemsUpdate = System.currentTimeMillis() + 5000;
                 }
                 // Updates just items one time per second.
                 for(MenuRender menu : menusInRender.values()) {
-                    menu.updateItems(false, true, false);
+                    menu.updateMenuItems(false, false);
                 }
             }
-        }.runTaskTimerAsynchronously(FlarePowered.LIB.getPlugin(), 0, 10);
+        }.runTaskTimerAsynchronously(FlarePowered.LIB.getPlugin(), 0, 8);
     }
 
     public void renderMenuToPlayer(Player player, String menuName) throws MenuRenderException {
@@ -153,6 +151,8 @@ public class MenuManager implements Listener {
             else
                 System.out.println(event.getCursor());
         }
+        if(event.getRawSlot() <= 127 && event.getRawSlot() <= -127)
+            return;
         if(!menusInRender.get(player).inRender.get(menusInRender.get(player).page).containsKey((byte) event.getRawSlot()))
             return;
         menusInRender.get(player).inRender.get(menusInRender.get(player).page).get((byte) event.getRawSlot()).first.onClickCommands((Player) event.getWhoClicked(), event.getClick());

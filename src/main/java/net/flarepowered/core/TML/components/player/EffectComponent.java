@@ -19,7 +19,7 @@ public class EffectComponent implements Component {
         Matcher matcher = pattern.matcher(string);
         if(matcher.find()) {
             if(matcher.group(1) == null)
-                throw new ComponentException("The component [SOUND] has not sound defined, use [SOUND] sound=<sound>. We are skipping this item.");
+                throw new ComponentException("The component [effect] has a null effect, use [effect] sound=<sound>. We are skipping this item.");
             int duration = 1;
             int amplifier = 1;
             if(matcher.group(3) != null)

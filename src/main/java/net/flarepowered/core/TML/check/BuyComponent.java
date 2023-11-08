@@ -2,7 +2,8 @@ package net.flarepowered.core.TML.check;
 
 import net.flarepowered.core.TML.components.Component;
 import net.flarepowered.core.TML.objects.TMLState;
-import net.flarepowered.core.text.StringUtils;
+import net.flarepowered.core.text.Message;
+import net.flarepowered.core.text.other.StringUtils;
 import net.flarepowered.core.text.other.Replace;
 import net.flarepowered.other.exceptions.ComponentException;
 import net.flarepowered.utils.DependencyManager;
@@ -32,7 +33,7 @@ public class BuyComponent implements Component {
                         DependencyManager.GET.getVaultEconomy().withdrawPlayer(player, Double.parseDouble(matcher.group(2)));
                         return TMLState.COMPLETED;
                     }
-                    player.sendMessage(StringUtils.formatMessageFromLocale("buy_failed", player, new Replace("%pl_amount%", matcher.group(2))));
+                    Message.sendLocalizedMessage("buy_failed", player, new Replace("%pl_amount%", matcher.group(2)));
                     break;
                 case "tokens":
                     if(!DependencyManager.GET.isPluginLoaded(DependencyManager.Dependency.FlareTokens))
@@ -42,7 +43,7 @@ public class BuyComponent implements Component {
 //                            TokensPlayer.warpPlayer(player.getUniqueId()).removeTokens(Integer.parseInt(matcher.group(2)));
 //                            return TMLState.COMPLETED;
 //                        }
-                        player.sendMessage(StringUtils.formatMessageFromLocale("buy_failed", player, new Replace("%pl_amount%", matcher.group(2))));
+                        Message.sendLocalizedMessage("buy_failed", player, new Replace("%pl_amount%", matcher.group(2)));
                     } catch (NumberFormatException err) {
                         throw new ComponentException("FlareTokens accepts only natural numbers, for example 1,4,2,6,7 etc");
                     }

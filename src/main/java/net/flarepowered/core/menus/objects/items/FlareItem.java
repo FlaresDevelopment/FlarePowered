@@ -3,7 +3,7 @@ package net.flarepowered.core.menus.objects.items;
 import net.flarepowered.FlarePowered;
 import net.flarepowered.core.TML.FlareScript;
 import net.flarepowered.core.menus.other.ItemType;
-import net.flarepowered.core.text.StringUtils;
+import net.flarepowered.core.text.Message;
 import net.flarepowered.other.Logger;
 import net.flarepowered.other.exceptions.ItemBuilderConfigurationException;
 import net.flarepowered.utils.VersionControl;
@@ -72,9 +72,9 @@ public class FlareItem {
         for(Pair<String, ClickType> actual : clickCommands) {
             if(actual.second != null) {
                 if(actual.second.equals(type))
-                    commands.add(StringUtils.formatMessage(actual.first, player));
+                    commands.add(Message.format(actual.first, player));
             } else
-                commands.add(StringUtils.formatMessage(actual.first, player));
+                commands.add(Message.format(actual.first, player));
         }
         FlareScript flareScript = new FlareScript();
         flareScript.processFull(commands, player);
@@ -159,9 +159,8 @@ public class FlareItem {
     public boolean canBeViewed (Player player) {
         if(viewRequirementList.isEmpty())
             return canBeViewed;
-        FlareScript fl = new FlareScript();
-        canBeViewed = fl.processFull((List<String>) viewRequirementList.stream()
-                .map(a -> StringUtils.formatMessage(a, player))
+        canBeViewed = new FlareScript().processFull((List<String>) viewRequirementList.stream()
+                .map(a -> Message.format(a, player))
                 .collect(Collectors.toCollection(ArrayList::new)), player);
         return canBeViewed;
     }
@@ -170,12 +169,12 @@ public class FlareItem {
         ItemStack itemStack = MaterialStructure.getFromString(material, player).construct();
         ItemMeta im = itemStack.getItemMeta();
         itemStack.setAmount(amount);
-        im.setDisplayName(StringUtils.formatMessage(displayName, player));
+        im.setDisplayName(Message.format(displayName, player));
         if (lore != null)
             im.setLore(lore.stream()
-                    .map(lore -> StringUtils.formatMessage(lore, player))
+                    .map(lore -> Message.format(lore, player))
                     .collect(Collectors.toCollection(ArrayList::new)));
-        if(!material.contains("itemsadder") && !material.contains("executableitems")) {
+        if(!material.toLowerCase(Locale.ROOT).contains("itemsadder") && !material.toLowerCase(Locale.ROOT).contains("executableitems")) {
             if (VersionControl.getVersion() > 13)
                 im.setCustomModelData(customModelData);
         }

@@ -1,7 +1,6 @@
 package net.flarepowered.core.TML.components;
 
 import net.flarepowered.core.TML.objects.TMLState;
-import net.flarepowered.core.text.StringUtils;
 import net.flarepowered.other.exceptions.ComponentException;
 import org.bukkit.entity.Player;
 

@@ -1,6 +1,6 @@
 package net.flarepowered.core.text.color;
 
-import net.flarepowered.core.text.ColorUtils;
+import net.flarepowered.core.text.other.ColorUtils;
 
 import java.util.regex.Matcher;
 

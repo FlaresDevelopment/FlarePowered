@@ -1,8 +1,8 @@
-package net.flares.lib.TML.check;
+package net.flarepowered.core.TML.check;
 
-import net.flarepowered.core.TML.check.Requirement;
 import net.flarepowered.core.TML.objects.TMLState;
-import net.flarepowered.core.text.StringUtils;
+import net.flarepowered.core.text.Message;
+import net.flarepowered.core.text.other.StringUtils;
 import net.flarepowered.other.exceptions.CheckException;
 import org.bukkit.entity.Player;
 
@@ -33,7 +33,7 @@ public class ExpressionCheck implements Requirement {
                     throw new CheckException("The component [CHECK(expression)] has no operator (==;!=;<;>;<=;>=). We are skipping this item.");
                 if(matcher.group(4) == null)
                     throw new CheckException("The component [CHECK(expression)] has no part2. We are skipping this item.");
-                if(check(StringUtils.formatMessage(matcher.group(2), player), matcher.group(3), StringUtils.formatMessage(matcher.group(2), player)))
+                if(check(Message.format(matcher.group(2), player), matcher.group(3), Message.format(matcher.group(4), player)))
                     return TMLState.CHECK_SUCCESS; else return TMLState.CHECK_FALL;
             }
         }

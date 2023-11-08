@@ -1,9 +1,9 @@
 package net.flarepowered.core.text.images;
 
-import net.flarepowered.core.text.ColorUtils;
-import net.flarepowered.core.text.StringUtils;
+import net.flarepowered.core.text.Message;
+import net.flarepowered.core.text.other.ColorUtils;
+import net.flarepowered.core.text.other.StringUtils;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.entity.Player;
 import org.bukkit.util.ChatPaginator;
 
@@ -35,7 +35,7 @@ public class ImageMessage {
     public ImageMessage appendText(String... text) {
         for (int y = 0; y < lines.length; y++) {
             if (text.length > y) {
-                lines[y] += StringUtils.formatMessage( " " + text[y], player);
+                lines[y] += text[y];
             }
         }
         return this;
@@ -74,9 +74,9 @@ public class ImageMessage {
         String[] lines = new String[colors[0].length];
         for (int y = 0; y < colors[0].length; y++) {
             String line = "";
-            for (int x = 0; x < colors.length; x++) {
-                ChatColor color = colors[x][y];
-                line += (color != null) ? colors[x][y].toString() + imgchar : TRANSPARENT_CHAR;
+            for (ChatColor[] chatColors : colors) {
+                ChatColor color = chatColors[y];
+                line += (color != null) ? chatColors[y].toString() + imgchar : TRANSPARENT_CHAR;
             }
             lines[y] = line + ChatColor.RESET;
         }
@@ -114,7 +114,7 @@ public class ImageMessage {
 
     public void sendToPlayer(Player player) {
         for (String line : lines) {
-            player.sendMessage(line);
+            Message.sendMessage(line, player);
         }
     }
 

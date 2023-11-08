@@ -12,7 +12,7 @@ import static org.bukkit.entity.ItemDisplay.ItemDisplayTransform.GUI;
 
 public class CloseMenuComponent implements Component {
 
-    java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("(?i)\\[EXIT]");
+    java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("(?i)\\[(EXIT|CLOSE)]");
 
     //(\w+=(\S+))
     @Override

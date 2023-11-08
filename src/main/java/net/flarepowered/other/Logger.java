@@ -9,7 +9,6 @@ public class Logger {
     public static void info(String s) {
         FlarePowered.LIB.getPlugin().getLogger().log(Level.INFO, s);
     }
-
     public static void warn(String s) {
         FlarePowered.LIB.getPlugin().getLogger().log(Level.WARNING, s);
     }

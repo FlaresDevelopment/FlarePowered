@@ -1,8 +1,9 @@
-package net.flarepowered.core.text;
+package net.flarepowered.core.text.other;
 
 import com.google.common.collect.ImmutableMap;
 import net.flarepowered.core.text.color.ColorPattern;
 import net.flarepowered.core.text.color.GradientPattern;
+import net.flarepowered.core.text.color.RainbowPattern;
 import net.flarepowered.core.text.color.SolidPattern;
 import net.flarepowered.utils.VersionControl;
 import net.md_5.bungee.api.ChatColor;
@@ -43,7 +44,7 @@ public class ColorUtils {
             .put(new Color(16777045), ChatColor.getByChar('e'))
             .put(new Color(16777215), ChatColor.getByChar('f')).build();
 
-    private static final List<ColorPattern> PATTERNS = Arrays.asList(new GradientPattern(), new SolidPattern());
+    private static final List<ColorPattern> PATTERNS = Arrays.asList(new GradientPattern(), new SolidPattern(), new RainbowPattern());
 
     public static String process(String string) {
         for (ColorPattern pattern : PATTERNS) {
