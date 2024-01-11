@@ -16,9 +16,13 @@ public class BossbarSchematic {
     public int progress;
     public boolean enableDecreaseAnimation;
     public int animate = -1;
-    public boolean update = false;
+    public boolean update;
 
     public BossbarSchematic() {
+        this.barStyle = BarStyle.SOLID;
+        this.barColor = BarColor.PURPLE;
+        this.screenTime = 10;
+        this.title = "";
     }
 
     /**

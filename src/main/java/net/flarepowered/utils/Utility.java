@@ -1,9 +1,14 @@
 package net.flarepowered.utils;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.security.DigestInputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class Utility {
 
@@ -23,6 +28,40 @@ public class Utility {
             e.printStackTrace();
         }
         return 400;
+    }
+
+    public static byte[] generateChecksum(String filePath, String algorithm) throws IOException, NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance(algorithm);
+
+        try (DigestInputStream dis = new DigestInputStream(new FileInputStream(filePath), md)) {
+            byte[] buffer = new byte[8192];
+            while (dis.read(buffer) != -1) {}
+        }
+
+        return md.digest();
+    }
+
+    public static String generateStringChecksum(String filePath, String algorithm) throws IOException, NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance(algorithm);
+
+        try (DigestInputStream dis = new DigestInputStream(new FileInputStream(filePath), md)) {
+            byte[] buffer = new byte[8192];
+            while (dis.read(buffer) != -1) {}
+        }
+
+        byte[] digest = md.digest();
+
+        StringBuilder hexString = new StringBuilder();
+
+        for (byte b : digest) {
+            String hex = Integer.toHexString(0xFF & b);
+            if (hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+        }
+
+        return hexString.toString();
     }
 
 }

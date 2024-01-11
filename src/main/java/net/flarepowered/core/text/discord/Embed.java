@@ -57,8 +57,8 @@ public class Embed {
         return this;
     }
 
-    public Embed setColor(int color) {
-        this.color = color;
+    public Embed setColor(String color) {
+        this.color = Integer.parseInt(color.replaceFirst("#", ""), 16) ;
         return this;
     }
 

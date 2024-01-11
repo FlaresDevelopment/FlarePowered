@@ -1,4 +1,4 @@
-package net.flarepowered.core.menus.objects;
+package net.flarepowered.utils.XSeries;
 /*
  * The MIT License (MIT)
  *

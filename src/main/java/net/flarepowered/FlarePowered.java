@@ -7,14 +7,17 @@ import net.flarepowered.core.TML.components.ServerSwitchComponent;
 import net.flarepowered.core.TML.components.economy.MobcoinsComponent;
 import net.flarepowered.core.TML.components.economy.MoneyComponent;
 import net.flarepowered.core.TML.components.economy.TokensComponent;
-import net.flarepowered.core.TML.components.menu.CloseMenuComponent;
+import net.flarepowered.core.TML.components.menu.AddItemComponent;
+import net.flarepowered.core.TML.components.menu.ExitComponent;
+import net.flarepowered.core.TML.components.menu.RemoveItemComponent;
+import net.flarepowered.core.TML.components.menu.VariableComponent;
 import net.flarepowered.core.TML.components.player.*;
 import net.flarepowered.core.TML.objects.TMLArray;
-import net.flarepowered.core.menus.MenuManager;
 import net.flarepowered.core.text.MessageEngine;
 import net.flarepowered.core.text.bossbar.BossBarUtils;
 import net.flarepowered.core.text.placeholders.DefaultPlaceholders;
 import net.flarepowered.core.text.placeholders.Placeholder;
+import net.flarepowered.neo.ui.MenuArchitect;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -28,7 +31,6 @@ public enum FlarePowered {
     private TMLArray TMLObject;
     private BossBarUtils bossBarUtils;
     private List<Placeholder> placeholders;
-    private MenuManager menuManager;
     private MessageEngine messageEngine;
     
     public void useLib(JavaPlugin plugin) {
@@ -49,8 +51,7 @@ public enum FlarePowered {
     }
 
     public void enableMenus() {
-        this.menuManager = new MenuManager();
-        menuManager.onEnable();
+        MenuArchitect.MENU.onEnable();
     }
 
     public void enableBossBars() {
@@ -72,8 +73,9 @@ public enum FlarePowered {
         this.TMLObject = new TMLArray();
         // TODO implement using reflection pls
         TMLObject.addComponent(new ConsoleComponent(), new ServerSwitchComponent(), new TitleComponent(), new SudoComponent(), new SoundComponent(),
-                new PlayerComponent(), new MessageComponent(), new EffectComponent(), new BossbarComponent(), new ActionBarComponent(), new CloseMenuComponent(),
+                new PlayerComponent(), new MessageComponent(), new EffectComponent(), new BossbarComponent(), new ActionBarComponent(),
                 new MobcoinsComponent(), new MoneyComponent(), new TokensComponent(), new BuyComponent());
+        TMLObject.addComponent(new RemoveItemComponent(), new AddItemComponent(), new ExitComponent(), new VariableComponent());
         TMLObject.addRequirement(new ExpressionCheck(), new ItemCheck(), new JavaScriptCheck(), new MoneyCheck(), new PermissionCheck());
     }
 
