@@ -76,7 +76,7 @@ public class InventoryScreen {
         }
     }
 
-    private void addItemToDock(int slot, FlareStack item) {
+    public void addItemToDock(int slot, FlareStack item) {
         if(!content.containsKey(slot))
             content.put(slot, new ItemDock());
         content.get(slot).addItem(item);
