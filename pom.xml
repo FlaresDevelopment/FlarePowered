@@ -6,7 +6,7 @@
 
     <groupId>net.flaredev</groupId>
     <artifactId>FlarePowered</artifactId>
-    <version>23.7.14</version>
+    <version>24.1.12</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -59,7 +59,7 @@
         <dependency>
             <groupId>com.github.Ssomar-Developement</groupId>
             <artifactId>SCore</artifactId>
-            <version>3.9.59</version>
+            <version>4.24.1.8</version>
         </dependency>
         <dependency>
             <groupId>com.zaxxer</groupId>
