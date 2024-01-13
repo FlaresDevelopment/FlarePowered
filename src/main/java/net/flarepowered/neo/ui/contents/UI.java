@@ -82,8 +82,9 @@ public class UI {
             ui.type = template.getType();
         }
         // Load variables
-        if(template.getReplacesList() != null)
-            ui.replacesList = template.getReplacesList();
+        if(template.getReplacesList() != null) {
+            ui.replacesList = (HashMap<String, Replace>) template.getReplacesList().clone();
+        }
         if(template.getLocalVariables() != null) {
             for(MenuVariable key : template.getLocalVariables().values())
                 ui.replacesList.put(key.getID(), new Replace("%var_" + key + "%", key.getVariable().toString()));
@@ -91,7 +92,7 @@ public class UI {
         }
         /* Content and Meta */
         ui.title = template.getTitle() != null ? template.getTitle() : "Default FlarePanel™ Title";
-        ui.content = template.getContent();
+        ui.content = (HashMap<Integer, InventoryScreen>) template.getContent().clone();
         template.getContent().values().forEach(is -> is.updateUI(ui));
         ui.inventory = ui.type != null ? Bukkit.createInventory(owner, ui.type, Message.format(ui.title, owner)) : Bukkit.createInventory(owner, ui.size, Message.format(ui.title, owner));
         return ui;

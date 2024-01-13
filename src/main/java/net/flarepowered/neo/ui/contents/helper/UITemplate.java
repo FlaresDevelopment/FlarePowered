@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 @Setter
 @Getter
-public class UITemplate {
+public class UITemplate implements Cloneable {
     private int size;
     private InventoryType type;
     private String title;
@@ -18,4 +18,12 @@ public class UITemplate {
     private HashMap<Integer, InventoryScreen> content;
     private HashMap<String, Replace> replacesList = new HashMap<>();
 
+    @Override
+    public UITemplate clone() {
+        try {
+            return (UITemplate) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }
