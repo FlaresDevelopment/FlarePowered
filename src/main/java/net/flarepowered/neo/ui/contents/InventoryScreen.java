@@ -1,10 +1,10 @@
 package net.flarepowered.neo.ui.contents;
 
-import lombok.Setter;
+import lombok.Getter;
 import net.flarepowered.FlarePowered;
 import net.flarepowered.core.text.other.Replace;
-import net.flarepowered.neo.ui.items.FlareStack;
 import net.flarepowered.other.Logger;
+import net.flarepowered.neo.ui.items.FlareStack;
 import net.flarepowered.other.exceptions.ItemBuilderConfigurationException;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 public class InventoryScreen {
 
+    @Getter
     private HashMap<Integer, ItemDock> content = new HashMap<>();
     private UI ui;
 

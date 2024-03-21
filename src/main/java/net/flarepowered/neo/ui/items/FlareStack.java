@@ -2,6 +2,7 @@ package net.flarepowered.neo.ui.items;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.flarepowered.FlarePowered;
 import net.flarepowered.core.TML.FlareScript;
 import net.flarepowered.core.text.Message;
 import net.flarepowered.core.text.other.Replace;
@@ -9,6 +10,7 @@ import net.flarepowered.other.Logger;
 import net.flarepowered.other.exceptions.ItemBuilderConfigurationException;
 import net.flarepowered.utils.VersionControl;
 import net.flarepowered.utils.objects.Pair;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -17,8 +19,10 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -49,6 +53,11 @@ public class FlareStack {
     public List<Pair<String, ClickType>> clickCommands;
     public List<String> onUpdate;
     private List<String> viewRequirements;
+
+    private HashMap<PersistentDataType, String> keys;
+    private NamespacedKey key;
+
+    private List<Replace> ItemReplaces;
 
     public static FlareStack wrap(ConfigurationSection section) {
         FlareStack stack = new FlareStack();
@@ -159,12 +168,27 @@ public class FlareStack {
         if(material == null) throw new ItemBuilderConfigurationException("You need to add a material!");
         ItemStack itemStack = material.construct(player);
         ItemMeta im = itemStack.getItemMeta();
+        Replace[] toReplace;
+        if(keys != null) {
+            if(key == null)
+                key = new NamespacedKey(FlarePowered.LIB.getPlugin(), "items");
+            keys.forEach(((persistentDataType, string) ->
+                    im.getPersistentDataContainer().set(key, persistentDataType, string)
+                    ));
+        }
+        if(getItemReplaces() == null)
+            toReplace = replace;
+        else {
+            toReplace = new Replace[getItemReplaces().size() + replace.length];
+            System.arraycopy(getItemReplaces().toArray(new Replace[0]), 0, toReplace, 0, getItemReplaces().size());
+            System.arraycopy(replace, 0, toReplace, 0, replace.length);
+        }
         if(im == null) return itemStack;
         itemStack.setAmount(amount);
         /* Display */
-        if(displayName != null) im.setDisplayName(Message.format(displayName, player, replace));
+        if(displayName != null) im.setDisplayName(Message.format(displayName, player, toReplace));
         if (lore != null)
-            im.setLore(Message.format(lore, player, replace));
+            im.setLore(Message.format(lore, player, toReplace));
         if (glow) {
             itemStack.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 1);
             im.addItemFlags(ItemFlag.HIDE_ENCHANTS);

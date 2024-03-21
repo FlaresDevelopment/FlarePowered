@@ -1,5 +1,7 @@
 package net.flarepowered.neo.ui.items;
 
+import net.flarepowered.neo.ui.items.FlareStack;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

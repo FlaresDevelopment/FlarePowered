@@ -2,11 +2,11 @@ package net.flarepowered.neo.ui.contents;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.flarepowered.neo.ui.items.FlareStack;
 import net.flarepowered.core.text.Message;
 import net.flarepowered.core.text.other.Replace;
 import net.flarepowered.neo.ui.contents.helper.MenuVariable;
 import net.flarepowered.neo.ui.contents.helper.UITemplate;
-import net.flarepowered.neo.ui.items.FlareStack;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -73,7 +73,7 @@ public class UI {
         return ui;
     }
 
-    public static UI wrapFromTemplate(Player owner, UITemplate template) {
+    public static UI wrapFromTemplate(Player owner, UITemplate template, boolean allowContentChange) {
         UI ui = new UI();
         ui.player = owner;
         if(template.getSize() != 0) {
@@ -83,17 +83,26 @@ public class UI {
         }
         // Load variables
         if(template.getReplacesList() != null) {
-            ui.replacesList = (HashMap<String, Replace>) template.getReplacesList().clone();
+            ui.replacesList.putAll(template.getReplacesList());
         }
         if(template.getLocalVariables() != null) {
+            ui.localVariables = new HashMap<>();
             for(MenuVariable key : template.getLocalVariables().values())
                 ui.replacesList.put(key.getID(), new Replace("%var_" + key + "%", key.getVariable().toString()));
-            ui.localVariables = template.getLocalVariables();
+            ui.localVariables.putAll(template.getLocalVariables());
         }
         /* Content and Meta */
         ui.title = template.getTitle() != null ? template.getTitle() : "Default FlarePanel™ Title";
-        ui.content = (HashMap<Integer, InventoryScreen>) template.getContent().clone();
-        template.getContent().values().forEach(is -> is.updateUI(ui));
+        if(allowContentChange) {
+            ui.content = new HashMap<>();
+            template.getContent().forEach((key, value) -> {
+                InventoryScreen is = new InventoryScreen(ui);
+                is.getContent().putAll(value.getContent());
+                ui.content.put(key, is);
+            });
+        } else {
+            ui.content = template.getContent();
+        }
         ui.inventory = ui.type != null ? Bukkit.createInventory(owner, ui.type, Message.format(ui.title, owner)) : Bukkit.createInventory(owner, ui.size, Message.format(ui.title, owner));
         return ui;
     }
